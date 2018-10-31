@@ -2,8 +2,6 @@
 
 namespace Febalist\Laravel\Generator\Commands;
 
-use Febalist\Laravel\Generator\Generator;
-use Illuminate\Console\Command;
 use Illuminate\Support\Composer;
 
 class GenerateController extends Command
@@ -30,7 +28,7 @@ class GenerateController extends Command
     public function handle(Composer $composer)
     {
         foreach ($this->argument('model') as $model) {
-            Generator::generateController(
+            $this->generator()->generateController(
                 $model,
                 $this->option('views'),
                 $this->option('extends')

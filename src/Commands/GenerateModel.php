@@ -2,8 +2,6 @@
 
 namespace Febalist\Laravel\Generator\Commands;
 
-use Febalist\Laravel\Generator\Generator;
-use Illuminate\Console\Command;
 use Illuminate\Support\Composer;
 
 class GenerateModel extends Command
@@ -30,7 +28,7 @@ class GenerateModel extends Command
     public function handle(Composer $composer)
     {
         foreach ($this->argument('model') as $model) {
-            Generator::generateModel(
+            $this->generator()->generateModel(
                 $model,
                 $this->option('migration'),
                 $this->option('resource'),

@@ -4,21 +4,18 @@ namespace Febalist\Laravel\Generator;
 
 use Artisan;
 use File;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class Generator
 {
-    protected $type;
-    protected $file;
-    protected $data;
+    protected $output;
 
-    public function __construct($type, $file, $data)
+    public function __construct(OutputInterface $output)
     {
-        $this->type = $type;
-        $this->file = $file;
-        $this->data = $data;
+        $this->output = $output;
     }
 
-    public static function generateModel(
+    public function generateModel(
         $model,
         $migration = false,
         $resource = false,
@@ -26,93 +23,90 @@ class Generator
         $views = false,
         $extends = null
     ) {
-        static::generate(
+
+        $this->makeFile(
             'model',
-            app_path('modelClass.php'),
+            'app/modelClass.php',
             compact('model')
         );
 
         if ($migration) {
-            static::generateMigration($model);
+            $this->generateMigration($model);
         }
 
         if ($resource) {
-            static::generateResource($model);
+            $this->generateResource($model);
         }
 
         if ($controller) {
-            static::generateController($model, $views, $extends);
+            $this->generateController($model, $views, $extends);
         }
     }
 
-    public static function generateMigration($model)
+    public function generateMigration($model)
     {
         $table = str_plural(snake_case(studly_case($model)));
 
         Artisan::call('make:migration', [
             'name' => "create_{$table}_table",
             '--create' => $table,
-        ]);
+        ], $this->output);
     }
 
-    public static function generateResource($model)
+    public function generateResource($model)
     {
-        static::generate(
+        $this->makeFile(
             'resource',
-            app_path('Http/Resources/modelClassResource.php'),
+            'app/Http/Resources/modelClassResource.php',
             compact('model')
         );
     }
 
-    public static function generateController($model, $views = false, $extends = null)
+    public function generateController($model, $views = false, $extends = null)
     {
-        static::generate(
+        $this->makeFile(
             'controller',
-            app_path('Http/Controllers/modelClassController.php'),
+            'app/Http/Controllers/modelClassController.php',
             compact('model')
         );
 
         if ($views) {
-            static::generateViews($model, $extends);
+            $this->generateViews($model, $extends);
         }
     }
 
-    public static function generateViews($model, $extends = null)
+    public function generateViews($model, $extends = null)
     {
         foreach (['index', 'show', 'edit'] as $name) {
-            static::generate(
+            $this->makeFile(
                 "view.$name",
-                resource_path("views/modelSnakeCasePlural/$name.blade.php"),
+                "resources/views/modelSnakeCasePlural/$name.blade.php",
                 compact('model', 'extends')
             );
         }
     }
 
-    protected static function generate($type, $file, $data)
+    protected function makeFile($stub, $file, $data)
     {
-        $generator = new static($type, $file, $data);
-        $generator->make();
-    }
+        $content = $this->getStub($stub);
+        $vars = $this->getVars($data);
 
-    public function make()
-    {
-        $stub = $this->getStub();
-        $vars = $this->getVars();
-
-        $stub = str_replace(array_keys($vars), array_values($vars), $stub);
-        $file = str_replace(array_keys($vars), array_values($vars), $this->file);
+        $content = str_replace(array_keys($vars), array_values($vars), $content);
+        $file = str_replace(array_keys($vars), array_values($vars), $file);
 
         File::makeDirectory(dirname($file), 493, true, true);
-        File::put($file, $stub);
+        File::put(base_path($file), $content);
+
+        $this->output->writeln("<info>Created $stub:</info> $file");
     }
 
-    protected function getVars()
+    protected function getVars($data)
     {
         $vars = [];
 
         $vars['appNamespace'] = substr(app()->getNamespace(), 0, -1);
 
-        if ($model = $this->data['model'] ?? null) {
+        if ($model = $data['model'] ?? null) {
             $vars['modelClass'] = studly_case($model);
             $vars['modelClassFull'] = $vars['appNamespace'].'\\'.$vars['modelClass'];
             $vars['modelCamelCase'] = camel_case($model);
@@ -121,16 +115,16 @@ class Generator
             $vars['modelSnakeCasePlural'] = str_plural($vars['modelSnakeCase']);
         }
 
-        $vars['extendsView'] = $this->data['extends'] ?? 'layouts.app';
+        $vars['extendsView'] = $data['extends'] ?? 'layouts.app';
 
         return array_reverse($vars);
     }
 
-    protected function getStub()
+    protected function getStub($stub)
     {
-        $path = resource_path("stubs/$this->type.stub");
+        $path = resource_path("stubs/$stub.stub");
         if (!File::exists($path)) {
-            $path = __DIR__."/../stubs/$this->type.stub";
+            $path = __DIR__."/../stubs/$stub.stub";
         }
 
         return File::get($path);

@@ -2,8 +2,6 @@
 
 namespace Febalist\Laravel\Generator\Commands;
 
-use Febalist\Laravel\Generator\Generator;
-use Illuminate\Console\Command;
 use Illuminate\Support\Composer;
 
 class GenerateResource extends Command
@@ -30,7 +28,7 @@ class GenerateResource extends Command
     public function handle(Composer $composer)
     {
         foreach ($this->argument('model') as $model) {
-            Generator::generateResource(
+            $this->generator()->generateResource(
                 $model
             );
         }
