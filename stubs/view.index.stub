@@ -2,7 +2,7 @@
 
 @php /** @var \Illuminate\Contracts\Pagination\Paginator|\modelClassFull[] $modelCamelCasePlural */ @endphp
 
-@section('title', 'modelClass')
+@section('title', __('modelClassPlural'))
 
 @section('content')
   <div class="container">
@@ -10,7 +10,7 @@
       <div class="card-header clearfix">
         <div class="float-right">
           <a href="{{ route('modelSnakeCasePlural.create') }}">
-            Create
+            @lang('Create')
           </a>
         </div>
         @yield('title')

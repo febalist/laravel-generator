@@ -108,6 +108,7 @@ class Generator
 
         if ($model = $data['model'] ?? null) {
             $vars['modelClass'] = studly_case($model);
+            $vars['modelClassPlural'] = str_plural($vars['modelClass']);
             $vars['modelClassFull'] = $vars['appNamespace'].'\\'.$vars['modelClass'];
             $vars['modelCamelCase'] = camel_case($model);
             $vars['modelCamelCasePlural'] = str_plural($vars['modelCamelCase']);
