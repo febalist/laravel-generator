@@ -1,0 +1,9 @@
+<?php
+
+namespace appNamespace;
+
+/** @mixin modelClass */
+class modelClass extends Model
+{
+  //
+}

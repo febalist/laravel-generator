@@ -4,5 +4,17 @@
     "psr-4": {
       "Febalist\\Laravel\\Generator\\": "src/"
     }
-  }
+  },
+  "require": {
+    "illuminate/support": "^5.6",
+    "febalist/laravel-support": "^5.17|dev-master"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Febalist\\Laravel\\Generator\\GeneratorServiceProvider"
+      ]
+    }
+  },
+  "prefer-stable": true
 }
