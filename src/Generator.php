@@ -2,6 +2,7 @@
 
 namespace Febalist\Laravel\Generator;
 
+use Artisan;
 use File;
 
 class Generator
@@ -19,6 +20,7 @@ class Generator
 
     public static function generateModel(
         $model,
+        $migration = false,
         $resource = false,
         $controller = false,
         $views = false,
@@ -30,6 +32,10 @@ class Generator
             compact('model')
         );
 
+        if ($migration) {
+            static::generateMigration($model);
+        }
+
         if ($resource) {
             static::generateResource($model);
         }
@@ -37,6 +43,16 @@ class Generator
         if ($controller) {
             static::generateController($model, $views, $extends);
         }
+    }
+
+    public static function generateMigration($model)
+    {
+        $table = str_plural(snake_case(studly_case($model)));
+
+        Artisan::call('make:migration', [
+            'name' => "create_{$table}_table",
+            '--create' => $table,
+        ]);
     }
 
     public static function generateResource($model)
