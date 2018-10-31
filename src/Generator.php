@@ -19,8 +19,8 @@ class Generator
 
     public static function generateModel(
         $model,
-        $controller = false,
         $resource = false,
+        $controller = false,
         $views = false,
         $extends = null
     ) {
@@ -30,15 +30,28 @@ class Generator
             compact('model')
         );
 
+        if ($resource) {
+            static::generateResource($model);
+        }
+
         if ($controller) {
-            static::generateController($model, $resource, $views, $extends);
+            static::generateController($model, $views, $extends);
         }
     }
 
-    public static function generateController($model, $resource = false, $views = false, $extends = null)
+    public static function generateResource($model)
     {
         static::generate(
-            $resource ? 'controller.resource' : 'controller',
+            'resource',
+            app_path('Http/Resources/modelClassResource.php'),
+            compact('model')
+        );
+    }
+
+    public static function generateController($model, $views = false, $extends = null)
+    {
+        static::generate(
+            'controller',
             app_path('Http/Controllers/modelClassController.php'),
             compact('model')
         );

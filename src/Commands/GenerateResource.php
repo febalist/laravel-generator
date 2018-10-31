@@ -6,21 +6,21 @@ use Febalist\Laravel\Generator\Generator;
 use Illuminate\Console\Command;
 use Illuminate\Support\Composer;
 
-class GenerateModel extends Command
+class GenerateResource extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'generate:model {model} {--r|resource} {--c|controller} {--b|views} {--e|extends=}';
+    protected $signature = 'generate:resource {model}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generate model';
+    protected $description = 'Generate resource';
 
     /**
      * Execute the console command.
@@ -29,12 +29,8 @@ class GenerateModel extends Command
      */
     public function handle(Composer $composer)
     {
-        Generator::generateModel(
-            $this->argument('model'),
-            $this->option('resource'),
-            $this->option('controller'),
-            $this->option('views'),
-            $this->option('extends')
+        Generator::generateResource(
+            $this->argument('model')
         );
 
         $composer->dumpAutoloads();
