@@ -18,15 +18,26 @@
       <div class="card-body">
         {{ $modelCamelCasePlural->render() }}
 
-        <ul>
-          @foreach($modelCamelCasePlural as $modelCamelCase)
-            <li>
-              <a href="{{ route('modelSnakeCasePlural.show', $modelCamelCase) }}">
-                {{ $modelCamelCase->id }}
-              </a>
-            </li>
-          @endforeach
-        </ul>
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <thead>
+            <tr>
+              <th>ID</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($modelCamelCasePlural as $modelCamelCase)
+              <tr>
+                <td>
+                  <a href="{{ route('modelSnakeCasePlural.show', $modelCamelCase) }}">
+                    {{ $modelCamelCase->id }}
+                  </a>
+                </td>
+              </tr>
+            @endforeach
+            </tbody>
+          </table>
+        </div>
 
         {{ $modelCamelCasePlural->render() }}
       </div>
