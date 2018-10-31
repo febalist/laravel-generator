@@ -1,0 +1,8 @@
+{
+  "name": "febalist/laravel-generator",
+  "autoload": {
+    "psr-4": {
+      "Febalist\\Laravel\\Generator\\": "src/"
+    }
+  }
+}
