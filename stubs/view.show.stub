@@ -1,0 +1,23 @@
+@extends('extendsView')
+
+@php /** @var \modelClassFull $modelCamelCase */ @endphp
+
+@section('title', "modelClass $modelCamelCase->id")
+
+@section('content')
+  <div class="container">
+    <div class="card card-default mb-3">
+      <div class="card-header clearfix">
+        <div class="float-right">
+          <a href="{{ route('modelSnakeCasePlural.edit', $modelCamelCase) }}">
+            Edit
+          </a>
+        </div>
+        @yield('title')
+      </div>
+      <div class="card-body">
+
+      </div>
+    </div>
+  </div>
+@endsection

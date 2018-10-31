@@ -12,14 +12,14 @@ class GenerateController extends Command
      *
      * @var string
      */
-    protected $signature = 'generate:controller {model} {--r|resource}';
+    protected $signature = 'generate:controller {model} {--r|resource} {--b|views} {--e|extends=}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generate model';
+    protected $description = 'Generate controller';
 
     /**
      * Execute the console command.
@@ -30,7 +30,9 @@ class GenerateController extends Command
     {
         Generator::generateController(
             $this->argument('model'),
-            $this->option('resource')
+            $this->option('resource'),
+            $this->option('views'),
+            $this->option('extends')
         );
     }
 }

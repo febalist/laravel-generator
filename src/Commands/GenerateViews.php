@@ -5,21 +5,21 @@ namespace Febalist\Laravel\Generator\Commands;
 use Febalist\Laravel\Generator\Generator;
 use Illuminate\Console\Command;
 
-class GenerateModel extends Command
+class GenerateViews extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'generate:model {model} {--c|controller} {--r|resource} {--b|views} {--e|extends=}';
+    protected $signature = 'generate:views {model} {--e|extends=}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generate model';
+    protected $description = 'Generate views';
 
     /**
      * Execute the console command.
@@ -28,11 +28,8 @@ class GenerateModel extends Command
      */
     public function handle()
     {
-        Generator::generateModel(
+        Generator::generateViews(
             $this->argument('model'),
-            $this->option('controller'),
-            $this->option('resource'),
-            $this->option('views'),
             $this->option('extends')
         );
     }

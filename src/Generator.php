@@ -17,26 +17,46 @@ class Generator
         $this->data = $data;
     }
 
-    public static function generateModel($model, $controller = false, $resource = false)
-    {
+    public static function generateModel(
+        $model,
+        $controller = false,
+        $resource = false,
+        $views = false,
+        $extends = null
+    ) {
         static::generate(
             'model',
-            'app/Http/Controllers/modelClassController.php',
+            app_path('modelClass.php'),
             compact('model')
         );
 
         if ($controller) {
-            static::generateController($model, $resource);
+            static::generateController($model, $resource, $views, $extends);
         }
     }
 
-    public static function generateController($model, $resource = false)
+    public static function generateController($model, $resource = false, $views = false, $extends = null)
     {
         static::generate(
             $resource ? 'controller.resource' : 'controller',
-            'app/Http/Controllers/modelClassController.php',
+            app_path('Http/Controllers/modelClassController.php'),
             compact('model')
         );
+
+        if ($views) {
+            static::generateViews($model, $extends);
+        }
+    }
+
+    public static function generateViews($model, $extends = null)
+    {
+        foreach (['index', 'show', 'edit'] as $name) {
+            static::generate(
+                "view.$name",
+                resource_path("views/modelSnakeCasePlural/$name.blade.php"),
+                compact('model', 'extends')
+            );
+        }
     }
 
     protected static function generate($type, $file, $data)
@@ -53,7 +73,8 @@ class Generator
         $stub = str_replace(array_keys($vars), array_values($vars), $stub);
         $file = str_replace(array_keys($vars), array_values($vars), $this->file);
 
-        File::put(base_path($file), $stub);
+        File::makeDirectory(dirname($file), 493, true, true);
+        File::put($file, $stub);
     }
 
     protected function getVars()
@@ -71,7 +92,9 @@ class Generator
             $vars['modelSnakeCasePlural'] = str_plural($vars['modelSnakeCase']);
         }
 
-        return $vars;
+        $vars['extendsView'] = $this->data['extends'] ?? 'layouts.app';
+
+        return array_reverse($vars);
     }
 
     protected function getStub()

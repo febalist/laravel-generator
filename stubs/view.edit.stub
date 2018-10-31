@@ -1,0 +1,27 @@
+@extends('extendsView')
+
+@php /** @var \modelClassFull $modelCamelCase */ @endphp
+
+@section('title', $modelCamelCase->exists ? 'Edit modelClass' : 'Create modelClass')
+
+@section('content')
+  <div class="container">
+    <div class="card card-default mb-3">
+      <div class="card-header clearfix">
+        <div class="float-right">
+          @if($modelCamelCase->exists)
+            <a href="{{ route('modelSnakeCasePlural.show', $modelCamelCase) }}">
+              Back
+            </a>
+          @endif
+        </div>
+        @yield('title')
+      </div>
+      <div class="card-body">
+        {{ form()->openModel($modelCamelCase) }}
+
+        {{ form()->close('Save') }}
+      </div>
+    </div>
+  </div>
+@endsection

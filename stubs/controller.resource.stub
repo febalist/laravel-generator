@@ -8,21 +8,21 @@ class modelClassController extends Controller
 {
     public function index()
     {
-        $modelCamelCasePlural = modelClassFull::paginate();
+        $modelCamelCasePlural = modelClass::paginate();
 
         return view('modelSnakeCasePlural.index', compact('modelCamelCasePlural'));
     }
 
     public function create()
     {
-        $modelCamelCase = new modelClassFull();
+        $modelCamelCase = new modelClass();
 
         return $this->edit($modelCamelCase);
     }
 
     public function store()
     {
-        $modelCamelCase = new modelClassFull();
+        $modelCamelCase = new modelClass();
 
         return $this->update($modelCamelCase);
     }
