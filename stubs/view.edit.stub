@@ -2,7 +2,7 @@
 
 @php /** @var \modelClassFull $modelCamelCase */ @endphp
 
-@section('title', __('modelClassPlural').': '.__($modelCamelCase->exists ? 'Editing' : 'Creating'))
+@section('title', __($modelCamelCase->exists ? 'Editing' : 'Creating'))
 
 @section('content')
   <div class="container">
@@ -21,6 +21,14 @@
             </form>
           @endif
         </div>
+        <a href="{{ route('modelSnakeCasePlural.index') }}">
+          @lang('modelClassPlural')
+        </a> »
+        @if($modelCamelCase->exists)
+          <a href="{{ route('modelSnakeCasePlural.show', $modelCamelCase) }}">
+            {{ $modelCamelCase->name ?? $modelCamelCase->id }}
+          </a> »
+        @endif
         @yield('title')
       </div>
       <div class="card-body">
