@@ -1,0 +1,10 @@
+<?php
+
+namespace appNamespace\Http\Controllers;
+
+use modelClassFull;
+
+class modelClassController extends Controller
+{
+    //
+}

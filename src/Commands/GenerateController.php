@@ -5,14 +5,14 @@ namespace Febalist\Laravel\Generator\Commands;
 use Febalist\Laravel\Generator\Generator;
 use Illuminate\Console\Command;
 
-class GenerateModel extends Command
+class GenerateController extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'generate:model {model} {--c|controller} {--r|resource}';
+    protected $signature = 'generate:controller {model} {--r|resource}';
 
     /**
      * The console command description.
@@ -28,9 +28,8 @@ class GenerateModel extends Command
      */
     public function handle()
     {
-        Generator::generateModel(
+        Generator::generateController(
             $this->argument('model'),
-            $this->option('controller'),
             $this->option('resource')
         );
     }

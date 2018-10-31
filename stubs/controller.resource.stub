@@ -1,0 +1,55 @@
+<?php
+
+namespace appNamespace\Http\Controllers;
+
+use modelClassFull;
+
+class modelClassController extends Controller
+{
+    public function index()
+    {
+        $modelCamelCasePlural = modelClassFull::paginate();
+
+        return view('modelSnakeCasePlural.index', compact('modelCamelCasePlural'));
+    }
+
+    public function create()
+    {
+        $modelCamelCase = new modelClassFull();
+
+        return $this->edit($modelCamelCase);
+    }
+
+    public function store()
+    {
+        $modelCamelCase = new modelClassFull();
+
+        return $this->update($modelCamelCase);
+    }
+
+    public function show(modelClass $modelCamelCase)
+    {
+        return view('modelSnakeCasePlural.show', compact('modelCamelCase'));
+    }
+
+    public function edit(modelClass $modelCamelCase)
+    {
+        return view('modelSnakeCasePlural.edit', compact('modelCamelCase'));
+    }
+
+    public function update(modelClass $modelCamelCase)
+    {
+        $modelCamelCase->fill($this->validateWith([
+            //
+        ]))->save();
+
+        return redirect()->route('modelSnakeCasePlural.show', $modelCamelCase);
+    }
+
+    public function destroy(modelClass $modelCamelCase)
+    {
+        $modelCamelCase->delete();
+
+        return redirect()->route('modelSnakeCasePlural.index');
+    }
+}

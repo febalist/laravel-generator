@@ -6,24 +6,46 @@ use File;
 
 class Generator
 {
-    protected $file;
     protected $type;
+    protected $file;
     protected $data;
 
-    public function __construct($file, $type, $data)
+    public function __construct($type, $file, $data)
     {
-        $this->file = $file;
         $this->type = $type;
+        $this->file = $file;
         $this->data = $data;
     }
 
-    public static function make($file, $type, array $data = [])
+    public static function generateModel($model, $controller = false, $resource = false)
     {
-        $generator = new static($file, $type, $data);
-        return $generator->generate();
+        static::generate(
+            'model',
+            'app/Http/Controllers/modelClassController.php',
+            compact('model')
+        );
+
+        if ($controller) {
+            static::generateController($model, $resource);
+        }
     }
 
-    public function generate()
+    public static function generateController($model, $resource = false)
+    {
+        static::generate(
+            $resource ? 'controller.resource' : 'controller',
+            'app/Http/Controllers/modelClassController.php',
+            compact('model')
+        );
+    }
+
+    protected static function generate($type, $file, $data)
+    {
+        $generator = new static($type, $file, $data);
+        $generator->make();
+    }
+
+    public function make()
     {
         $stub = $this->getStub();
         $vars = $this->getVars();
@@ -32,8 +54,6 @@ class Generator
         $file = str_replace(array_keys($vars), array_values($vars), $this->file);
 
         File::put(base_path($file), $stub);
-
-        return $file;
     }
 
     protected function getVars()
@@ -44,7 +64,7 @@ class Generator
 
         if ($model = $this->data['model'] ?? null) {
             $vars['modelClass'] = studly_case($model);
-            $vars['modelFullClass'] = $vars['appNamespace'].'\\'.$vars['modelClass'];
+            $vars['modelClassFull'] = $vars['appNamespace'].'\\'.$vars['modelClass'];
             $vars['modelCamelCase'] = camel_case($model);
             $vars['modelCamelCasePlural'] = str_plural($vars['modelCamelCase']);
             $vars['modelSnakeCase'] = snake_case($model);
