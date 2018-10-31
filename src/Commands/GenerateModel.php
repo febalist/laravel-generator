@@ -4,6 +4,7 @@ namespace Febalist\Laravel\Generator\Commands;
 
 use Febalist\Laravel\Generator\Generator;
 use Illuminate\Console\Command;
+use Illuminate\Support\Composer;
 
 class GenerateModel extends Command
 {
@@ -26,7 +27,7 @@ class GenerateModel extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(Composer $composer)
     {
         Generator::generateModel(
             $this->argument('model'),
@@ -35,5 +36,7 @@ class GenerateModel extends Command
             $this->option('views'),
             $this->option('extends')
         );
+
+        $composer->dumpAutoloads();
     }
 }
