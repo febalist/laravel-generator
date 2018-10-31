@@ -2,7 +2,7 @@
 
 @php /** @var \modelClassFull $modelCamelCase */ @endphp
 
-@section('title', "modelClass $modelCamelCase->id")
+@section('title', 'modelClass '.($modelCamelCase->name ?? $modelCamelCase->id))
 
 @section('content')
   <div class="container">
