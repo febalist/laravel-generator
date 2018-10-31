@@ -13,7 +13,7 @@ class GenerateViews extends Command
      *
      * @var string
      */
-    protected $signature = 'generate:views {model} {--e|extends=}';
+    protected $signature = 'generate:views {model*} {--e|extends=}';
 
     /**
      * The console command description.
@@ -29,10 +29,12 @@ class GenerateViews extends Command
      */
     public function handle(Composer $composer)
     {
-        Generator::generateViews(
-            $this->argument('model'),
-            $this->option('extends')
-        );
+        foreach ($this->argument('model') as $model) {
+            Generator::generateViews(
+                $model,
+                $this->option('extends')
+            );
+        }
 
         $composer->dumpAutoloads();
     }

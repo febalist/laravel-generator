@@ -13,7 +13,7 @@ class GenerateModel extends Command
      *
      * @var string
      */
-    protected $signature = 'generate:model {model} {--m|migration} {--r|resource} {--c|controller} {--b|views} {--e|extends=}';
+    protected $signature = 'generate:model {model*} {--m|migration} {--r|resource} {--c|controller} {--b|views} {--e|extends=}';
 
     /**
      * The console command description.
@@ -29,14 +29,16 @@ class GenerateModel extends Command
      */
     public function handle(Composer $composer)
     {
-        Generator::generateModel(
-            $this->argument('model'),
-            $this->option('migration'),
-            $this->option('resource'),
-            $this->option('controller'),
-            $this->option('views'),
-            $this->option('extends')
-        );
+        foreach ($this->argument('model') as $model) {
+            Generator::generateModel(
+                $model,
+                $this->option('migration'),
+                $this->option('resource'),
+                $this->option('controller'),
+                $this->option('views'),
+                $this->option('extends')
+            );
+        }
 
         $composer->dumpAutoloads();
     }

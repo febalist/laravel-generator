@@ -13,7 +13,7 @@ class GenerateController extends Command
      *
      * @var string
      */
-    protected $signature = 'generate:controller {model} {--b|views} {--e|extends=}';
+    protected $signature = 'generate:controller {model*} {--b|views} {--e|extends=}';
 
     /**
      * The console command description.
@@ -29,11 +29,13 @@ class GenerateController extends Command
      */
     public function handle(Composer $composer)
     {
-        Generator::generateController(
-            $this->argument('model'),
-            $this->option('views'),
-            $this->option('extends')
-        );
+        foreach ($this->argument('model') as $model) {
+            Generator::generateController(
+                $model,
+                $this->option('views'),
+                $this->option('extends')
+            );
+        }
 
         $composer->dumpAutoloads();
     }

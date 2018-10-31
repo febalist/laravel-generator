@@ -13,7 +13,7 @@ class GenerateResource extends Command
      *
      * @var string
      */
-    protected $signature = 'generate:resource {model}';
+    protected $signature = 'generate:resource {model*}';
 
     /**
      * The console command description.
@@ -29,9 +29,11 @@ class GenerateResource extends Command
      */
     public function handle(Composer $composer)
     {
-        Generator::generateResource(
-            $this->argument('model')
-        );
+        foreach ($this->argument('model') as $model) {
+            Generator::generateResource(
+                $model
+            );
+        }
 
         $composer->dumpAutoloads();
     }
