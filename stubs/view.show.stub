@@ -9,13 +9,9 @@
     <div class="card card-default mb-3">
       <div class="card-header clearfix">
         <div class="float-right">
-          <a href="{{ route('modelSnakeCasePlural.edit', $modelCamelCase) }}">
-            @lang('Edit')
-          </a>
+          <a href="{{ route('modelSnakeCasePlural.edit', $modelCamelCase) }}">@lang('Edit')</a>
         </div>
-        <a href="{{ route('modelSnakeCasePlural.index') }}">
-          @lang('modelClassPlural')
-        </a> »
+        <a href="{{ route('modelSnakeCasePlural.index') }}">@lang('modelClassPlural')</a> »
         @yield('title')
       </div>
       <div class="card-body">

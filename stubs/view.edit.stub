@@ -11,9 +11,8 @@
         <div class="float-right">
           @if($modelCamelCase->exists)
             <a class="text-danger" href="{{ route('modelSnakeCasePlural.destroy', $modelCamelCase) }}"
-               onclick="event.preventDefault(); if(confirm('@lang('Delete')?')) document.getElementById('destroy-form').submit()">
-              @lang('Delete')
-            </a>
+               onclick="event.preventDefault(); if(confirm('@lang('Delete')?')) document.getElementById('destroy-form').submit()"
+            >@lang('Delete')</a>
             <form id="destroy-form" class="d-none" method="POST"
                   action="{{ route('modelSnakeCasePlural.destroy', $modelCamelCase) }}">
               @method('DELETE')
@@ -21,13 +20,9 @@
             </form>
           @endif
         </div>
-        <a href="{{ route('modelSnakeCasePlural.index') }}">
-          @lang('modelClassPlural')
-        </a> »
+        <a href="{{ route('modelSnakeCasePlural.index') }}">@lang('modelClassPlural')</a> »
         @if($modelCamelCase->exists)
-          <a href="{{ route('modelSnakeCasePlural.show', $modelCamelCase) }}">
-            {{ $modelCamelCase->name ?? $modelCamelCase->id }}
-          </a> »
+          <a href="{{ route('modelSnakeCasePlural.show', $modelCamelCase) }}">{{ $modelCamelCase->name ?? $modelCamelCase->id }}</a> »
         @endif
         @yield('title')
       </div>

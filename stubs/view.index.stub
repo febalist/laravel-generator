@@ -9,9 +9,7 @@
     <div class="card card-default mb-3">
       <div class="card-header clearfix">
         <div class="float-right">
-          <a href="{{ route('modelSnakeCasePlural.create') }}">
-            @lang('Create')
-          </a>
+          <a href="{{ route('modelSnakeCasePlural.create') }}">@lang('Create')</a>
         </div>
         @yield('title')
       </div>
@@ -29,9 +27,7 @@
             @foreach($modelCamelCasePlural as $modelCamelCase)
               <tr>
                 <td>
-                  <a href="{{ route('modelSnakeCasePlural.show', $modelCamelCase) }}">
-                    {{ $modelCamelCase->id }}
-                  </a>
+                  <a href="{{ route('modelSnakeCasePlural.show', $modelCamelCase) }}">{{ $modelCamelCase->id }}</a>
                 </td>
               </tr>
             @endforeach
