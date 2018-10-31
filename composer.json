@@ -6,8 +6,7 @@
     }
   },
   "require": {
-    "illuminate/support": "^5.6",
-    "febalist/laravel-support": "^5.17|dev-master"
+    "illuminate/support": "^5.6"
   },
   "extra": {
     "laravel": {
