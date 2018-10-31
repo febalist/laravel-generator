@@ -4,7 +4,9 @@ namespace appNamespace\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @property-read \modelClassFull $resource */
+/**
+ * @property-read \modelClassFull $resource
+ */
 class modelClassResource extends JsonResource
 {
     /**

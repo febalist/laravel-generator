@@ -2,7 +2,9 @@
 
 namespace appNamespace;
 
-/** @mixin modelClass */
+/**
+ * @mixin modelClass
+ */
 class modelClass extends Model
 {
     //
