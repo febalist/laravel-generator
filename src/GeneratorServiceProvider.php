@@ -10,8 +10,9 @@ class GeneratorServiceProvider extends IlluminateServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-                Commands\GenerateModel::class,
                 Commands\GenerateController::class,
+                Commands\GenerateModel::class,
+                Commands\GenerateResource::class,
                 Commands\GenerateViews::class,
             ]);
         }
