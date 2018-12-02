@@ -37,7 +37,5 @@ class GenerateModel extends Command
                 $this->option('extends')
             );
         }
-
-        $composer->dumpAutoloads();
     }
 }

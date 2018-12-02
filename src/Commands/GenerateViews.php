@@ -33,7 +33,5 @@ class GenerateViews extends Command
                 $this->option('extends')
             );
         }
-
-        $composer->dumpAutoloads();
     }
 }

@@ -34,7 +34,5 @@ class GenerateController extends Command
                 $this->option('extends')
             );
         }
-
-        $composer->dumpAutoloads();
     }
 }

@@ -32,7 +32,5 @@ class GenerateResource extends Command
                 $model
             );
         }
-
-        $composer->dumpAutoloads();
     }
 }
