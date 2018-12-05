@@ -8,7 +8,7 @@ class modelClassController extends Controller
 {
     public function index()
     {
-        $modelCamelCasePlural = modelClass::paginate();
+        $modelCamelCasePlural = modelClass::paginate()->appends(request()->all());
 
         return view('modelSnakeCasePlural.index', compact('modelCamelCasePlural'));
     }
