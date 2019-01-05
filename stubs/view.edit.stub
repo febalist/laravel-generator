@@ -10,14 +10,9 @@
       <div class="card-header clearfix">
         <div class="float-right">
           @if($modelCamelCase->exists)
-            <a class="text-danger" href="{{ route('modelSnakeCasePlural.destroy', $modelCamelCase) }}"
-               onclick="event.preventDefault(); if(confirm('@lang('Delete')?')) document.getElementById('destroy-form').submit()"
-            >@lang('Delete')</a>
-            <form id="destroy-form" class="d-none" method="POST"
-                  action="{{ route('modelSnakeCasePlural.destroy', $modelCamelCase) }}">
-              @method('DELETE')
-              @csrf
-            </form>
+            @delete(['route' => ['modelSnakeCasePlural.destroy', $modelCamelCase]])
+            @lang('Delete')
+            @enddelete
           @endif
         </div>
         <a href="{{ route('modelSnakeCasePlural.index') }}">@lang('modelClassPlural')</a> »
