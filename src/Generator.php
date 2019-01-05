@@ -91,8 +91,12 @@ class Generator
         $content = $this->getStub($stub);
         $vars = $this->getVars($data);
 
-        $content = str_replace(array_keys($vars), array_values($vars), $content);
         $file = str_replace(array_keys($vars), array_values($vars), $file);
+        if (File::exists($file)) {
+            return;
+        }
+
+        $content = str_replace(array_keys($vars), array_values($vars), $content);
 
         File::makeDirectory(dirname($file), 493, true, true);
         File::put(base_path($file), $content);
